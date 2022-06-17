@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
 import cors from 'cors';
+import fileUpload from 'express-fileupload';
 import moviesRoutes from '../routes/movies.route';
 import db from '../config/db';
 class Server {
@@ -22,6 +23,7 @@ class Server {
         try {
             await db.authenticate();
             console.log('DB Connection has been established successfully.');
+            await db.sync({ alter: false });
         } catch (error: any) {
             throw new Error(error);
         }
@@ -29,8 +31,17 @@ class Server {
 
     middlewares() {
         this.app.use(cors());
+        
         this.app.use(express.json());
+
         this.app.use(express.static('public'));
+
+        this.app.use(
+            fileUpload({
+              useTempFiles: true,
+              tempFileDir: '/tmp/'
+            })
+          );
     }
 
     routes() {
