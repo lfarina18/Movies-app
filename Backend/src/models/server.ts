@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import moviesRoutes from '../routes/movies.route';
+import db from '../config/db';
 class Server {
     private app: Application;
     private port: string;
@@ -12,8 +13,18 @@ class Server {
         this.app = express();
         this.port = process.env.PORT || '8080';
 
+        this.dbConnection();
         this.middlewares();
         this.routes();
+    }
+
+    async dbConnection() {
+        try {
+            await db.authenticate();
+            console.log('DB Connection has been established successfully.');
+        } catch (error: any) {
+            throw new Error(error);
+        }
     }
 
     middlewares() {
