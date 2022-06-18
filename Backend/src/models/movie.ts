@@ -1,7 +1,7 @@
-import { DataTypes } from "sequelize";
-import db from "../config/db";
+import { DataTypes } from 'sequelize';
+import db from '../config/db';
 
-const Movie = db.define("Movie", {
+const Movie = db.define('Movie', {
     title: {
         type: DataTypes.STRING
     },
@@ -21,16 +21,6 @@ const Movie = db.define("Movie", {
         type: DataTypes.TINYINT,
         defaultValue: 1
     },
-    createdAt: {
-        defaultValue: db.literal('CURRENT_TIMESTAMP()'),
-        allowNull: false,
-        type: DataTypes.DATE
-    },
-    updatedAt: {
-        defaultValue: db.literal('CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP()'),
-        allowNull: false,
-        type: DataTypes.DATE
-    }
 });
 
 export default Movie;

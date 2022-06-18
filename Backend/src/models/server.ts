@@ -24,8 +24,8 @@ class Server {
             await db.authenticate();
             console.log('DB Connection has been established successfully.');
             await db.sync({ alter: false });
-        } catch (error: any) {
-            throw new Error(error);
+        } catch (error) {
+            console.error('Unable to connect to the database:', error);
         }
     }
 
