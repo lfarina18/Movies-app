@@ -1,27 +1,28 @@
 import { DataTypes } from 'sequelize';
 import db from '../config/db';
 
-const Movie = db.define('Movie', {
+const Movie = db.define(
+  'Movie',
+  {
     title: {
-        type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     genders: {
-        type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     year: {
-        type: DataTypes.INTEGER
+      type: DataTypes.STRING,
     },
     directors: {
-        type: DataTypes.TEXT('long')
+      type: DataTypes.TEXT('long'),
     },
     actors: {
-        type: DataTypes.TEXT('long')
+      type: DataTypes.TEXT('long'),
     },
-    state: {
-        type: DataTypes.TINYINT,
-        defaultValue: 1
-    },
-});
+  },
+  {
+    paranoid: true,
+  }
+);
 
 export default Movie;
-
