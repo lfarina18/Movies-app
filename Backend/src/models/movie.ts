@@ -6,6 +6,11 @@ const Movie = db.define(
   {
     title: {
       type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        notEmpty: true,
+      },
     },
     genders: {
       type: DataTypes.STRING,
