@@ -23,17 +23,17 @@ export const uploadMovies = async (req: Request, res: Response) => {
   const capitalizedArchive = CapitalizedArray(jsonFile);
 
   try {
-    let count = 0;
+    
     capitalizedArchive.forEach(async (movie) => {
       const movieExists = await Movie.findOne({
         where: { title: movie.title },
       });
       if (movieExists === null) {
         Movie.create(movie);
-        count = count + 1;
+        
       }
     });
-    res.status(200).json(`${count} new movies were added.`);
+    res.status(200).json('Data were successfully saved');
   } catch (error) {
     res
       .status(500)
