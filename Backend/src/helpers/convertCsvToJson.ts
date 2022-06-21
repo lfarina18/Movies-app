@@ -12,24 +12,13 @@ export type MovieType = {
   actores: string;
 };
 
-export const convertCsvToJson = (file: UploadedFile) => {
-  const fileReplace = file.name.replace(/\s/g, '-').toLowerCase();
-
-  const uploadPath = path.join(__dirname, '../../uploads/', fileReplace);
-
-  file.mv(uploadPath, (err) => {
-    if (err) {
-      return response.status(500).json({ message: err.message });
-    }
-  });
+export const convertCsvToJson = (fileReplace: string) => {
 
   const json = csvToJson
     .formatValueByType()
     .getJsonFromCsv(`./uploads/${fileReplace}`);
-  
-  const jsonWihtoutDuplicate = removeDuplicates(json);
 
-  // return jsonWihtoutDuplicate;
+  const jsonWihtoutDuplicate = removeDuplicates(json);
 
   const jsonEdited = jsonWihtoutDuplicate.map((movie: MovieType) => {
     return {
