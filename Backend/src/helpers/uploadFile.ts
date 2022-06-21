@@ -19,6 +19,9 @@ export const uploadFile = (file: UploadedFile, validatedExtension = 'csv', folde
                 reject(err.message);
             }
         });
-        resolve(fileReplace);
+        setTimeout(() => {
+            
+            resolve(fileReplace);
+        }, 500);
     });
 }

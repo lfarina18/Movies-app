@@ -3,7 +3,7 @@ import { MovieType } from './convertCsvToJson';
 export const removeDuplicates = (array: MovieType[]) => {
   const unique = [];
 
-  const arrayNonUndefined = array.filter((movie: MovieType) => movie.titulo !== 'undefined');
+  const arrayNonUndefined = array.filter((movie: MovieType) => movie.titulo !== 'undefined' && movie.titulo !== '');
 
   for (let index = 0; index < arrayNonUndefined.length; index++) {
     const movie = arrayNonUndefined[index];
