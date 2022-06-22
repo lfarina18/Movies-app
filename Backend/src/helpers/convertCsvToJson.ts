@@ -10,10 +10,10 @@ export type MovieType = {
   actores: string;
 };
 
-export const convertCsvToJson = (fileReplace: string) => {
+export const convertCsvToJson = (pathFile: string) => {
   const json = csvToJson
     .formatValueByType()
-    .getJsonFromCsv(`./uploads/${fileReplace}`);
+    .getJsonFromCsv(`./uploads/${pathFile}`);
 
   const jsonWihtoutDuplicate = removeDuplicates(json);
 
@@ -27,8 +27,8 @@ export const convertCsvToJson = (fileReplace: string) => {
     };
   });
 
-  if (fs.existsSync(`./uploads/${fileReplace}`)) {
-    fs.unlinkSync(`./uploads/${fileReplace}`);
+  if (fs.existsSync(`./uploads/${pathFile}`)) {
+    fs.unlinkSync(`./uploads/${pathFile}`);
   }
 
   return jsonEdited;
