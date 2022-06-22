@@ -6,8 +6,8 @@ type ArchiveType = {
   actors: string;
 };
 
-const CapitalizeString = (string: string) => {
-  const words = string.toString().split(' ');
+export const CapitalizeString = (string: string) => {
+  const words = string.toString().replace(/  /g, "").trim().split(' ');
 
   const stringEdit = words
     .map((word) => {
@@ -23,7 +23,7 @@ export const CapitalizedArray = (array: ArchiveType[]) => {
     return {
       title: CapitalizeString(movie.title),
       genders: CapitalizeString(movie.genders),
-      year: movie.year,
+      year: CapitalizeString(movie.year),
       directors: CapitalizeString(movie.directors),
       actors: CapitalizeString(movie.actors),
     };
