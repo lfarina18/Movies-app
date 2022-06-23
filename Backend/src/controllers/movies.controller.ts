@@ -23,8 +23,8 @@ export const getMovie = async (req: Request, res: Response) => {
 
     res.json(movie);
   } catch (error) {
-    res.status(404).json({
-      msg: `There is no movie with the title: ${title}`,
+    res.status(500).json({
+      message:'Ha habido un error. Habla con el administrador'
     });
   }
 };
@@ -43,7 +43,7 @@ export const putMovie = async (req: Request, res: Response) => {
     const movie = await Movie.findByPk(id);
     if (!movie) {
       return res.status(400).json({
-        msg: `You cannot update the user with the id: ${id}. It does not exist`,
+        message: `No se puede actualizar el usuario con el id: ${id}. No existe.`,
       });
     }
     await movie.update({
@@ -54,12 +54,14 @@ export const putMovie = async (req: Request, res: Response) => {
       actors: actorsEdit
     });
     res.json({
-        msg: `The id: ${id}, has been update in the database.`,
+        msg: `El id: ${id},se ha actualizado en la base de datos.`,
         movie
       })
 
   } catch (error) {
-    res.status(500).json('There was an error. talk to the Administrator');
+    res.status(500).json({
+      message:'Ha habido un error. Habla con el administrador'
+    });
   }
 };
 
@@ -70,15 +72,17 @@ export const DeleteMovie = async (req: Request, res: Response) => {
     const movie = await Movie.findByPk(id);
     if (!movie) {
       return res.status(400).json({
-        msg: `You cannot delete the user with the id: ${id}. It does not exist`,
+        message: `No se puede eliminar el usuario con el id: ${id}. No existe.`,
       });
     }
     await movie.destroy();
     res.json({
-      msg: `The id: ${id}, has been deleted from the database.`,
+      message: `El id: ${id}, ha sido eliminado de la base de datos.`,
       movie
     });
   } catch (error) {
-    res.status(500).json('There was an error. talk to the Administrator');
+    res.status(500).json({
+      message:'Ha habido un error. Habla con el administrador'
+    });
   }
 };
