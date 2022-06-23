@@ -4,7 +4,7 @@ import { CapitalizeString } from '../helpers/CapitalizeFunction';
 import Movie from '../models/movie';
 
 export const getMovies = async (req: Request, res: Response) => {
-  const movies = await Movie.findAndCountAll();
+  const movies = await Movie.findAndCountAll({ limit: 10 });
 
   res.json(movies);
 };
