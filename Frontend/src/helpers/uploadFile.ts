@@ -12,17 +12,17 @@ export const uploadFile = async (file: File) => {
   };
   try {
     const response = await apiConnection.post('/upload', formData, config);
-
+    
     return Swal.fire({
       icon: 'success',
-      title: `${response.data}`,
+      title: `${response.data.message}`,
       showConfirmButton: true,
     });
   } catch (error) {
     return Swal.fire({
       icon: 'error',
       title: 'Hubo un error',
-      text: `${error.response.data}`,
+      text: `${error.response.data.message}`,
     });
   }
 };

@@ -1,33 +1,7 @@
 import { ChangeEvent, useRef, useState } from 'react';
+import { arrayMisc } from '../helpers/misc';
 import { uploadFile } from '../helpers/uploadFile';
 
-const array = [
-  'Titulo',
-  'Genero',
-  'Año',
-  'Director',
-  'Actores',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-  '...',
-];
 
 export const UploadFile = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -54,30 +28,31 @@ export const UploadFile = () => {
     <div className="m-6 p-6 bg-gray-200 text-lg sm:text-2xl text-center">
       <form onSubmit={handleSubmit} ref={formRef} className="p-1">
         <h2 className="px-5">
-          Seleccione el archivo a subir, solo admite el formato CSV <span className="text-sm text-red-600">(separador ;)</span>
+          Seleccione el archivo a subir, solo admite el formato CSV <span className="text-sm text-red-500">(separador ;)</span>
         </h2>
         <div>
-          <h3 className="text-sm sm:text-lg p-5 text-red-600 font-semibold">
+          <h3 className="text-sm sm:text-lg p-5 text-red-500 font-semibold">
             Importante: El archivo DEBE contener las siguientes columnas:
           </h3>
+          <p className="text-sm mb-3 font-semibold text-red-500">Las filas que no contengan información en el titulo, no se guardarán en la Base de Datos.</p>
           <div className="grid grid-cols-5 text-[12px] bg-white border border-gray-400 font-semibold">
-            {array.map((value) => (
-              <div className="flex justify-center items-center border h-7 border-gray-400 font-semibold">
-                {value}
+            {arrayMisc.map((value) => (
+
+              <div key={value.id} className="flex justify-center items-center border h-7 border-gray-400 font-semibold">
+                {value.field}
               </div>
             ))}
           </div>
         </div>
-        <div className="flex justify-center my-10">
-          <div className="w-full">
-            <input
-              className="block w-full sm:w-2/3 sm-w-full mx-auto py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-indigo-600 focus:outline-none"
-              required={true}
-              type="file"
-              accept="text/csv"
-              onChange={handleCsvUpload}
-            />
-          </div>
+
+        <div className="flex justify-center my-10 w-full">
+          <input
+            className="block w-full sm:w-2/3 sm-w-full mx-auto py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-indigo-600 focus:outline-none"
+            required={true}
+            type="file"
+            accept="text/csv"
+            onChange={handleCsvUpload}
+          />
         </div>
 
         <div className="flex flex-col sm:flex-row mt-4">
