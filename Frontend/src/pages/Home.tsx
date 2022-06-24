@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { ListItems } from '../components/ListItems';
+import { Pagination } from '../components/Pagination';
 import apiConnection from '../config/apiConnection';
 import { Movies } from '../interfaces/interfaces';
 
@@ -22,13 +23,14 @@ export const Home = () => {
     try {
       setIsLoading(true);
       const response = await apiConnection(`/movies/${textValue}`);
-      setMovies(response.data.rows);
+      console.log(response);
+
+      setMovies(response.data.content);
       setIsLoading(false);
       setSearchText({ textValue: '' });
     } catch (error) {
       console.log(error);
     }
-    return;
   };
 
   return (
@@ -101,7 +103,7 @@ export const Home = () => {
                     movies.map((item, i) => (
                       <ListItems
                         key={item.id}
-                        index={++i}
+                        id={item.id}
                         title={item.title}
                         genders={item.genders}
                         year={item.year}
@@ -116,6 +118,8 @@ export const Home = () => {
           </div>
         </div>
       </div>
+
+      <Pagination />
     </>
   );
 };
