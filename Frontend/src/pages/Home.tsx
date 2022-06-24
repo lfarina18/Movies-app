@@ -1,12 +1,12 @@
 import { ChangeEvent, useState } from 'react';
 import { ListItems } from '../components/ListItems';
-import { Pagination } from '../components/Pagination';
 import apiConnection from '../config/apiConnection';
 import { Movies } from '../interfaces/interfaces';
 
 export const Home = () => {
   const [movies, setMovies] = useState<Movies[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0)
 
   const [searchText, setSearchText] = useState({
     textValue: '',
@@ -23,15 +23,31 @@ export const Home = () => {
     try {
       setIsLoading(true);
       const response = await apiConnection(`/movies/${textValue}`);
-      console.log(response);
+
 
       setMovies(response.data.content);
       setIsLoading(false);
       setSearchText({ textValue: '' });
+      setCurrentPage(0)
     } catch (error) {
       console.log(error);
     }
   };
+
+
+
+  const filteredMovies = (): Movies[] => {
+    return movies.slice(currentPage, currentPage + 5);
+  }
+
+  const nextPage = () => {
+    setCurrentPage(currentPage + 5);
+  }
+  const PreviusPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 5)
+    };
+  }
 
   return (
     <>
@@ -100,7 +116,7 @@ export const Home = () => {
                       <td>Cargando...</td>
                     </tr>
                   ) : (
-                    movies.map((item, i) => (
+                    filteredMovies().map((item, i) => (
                       <ListItems
                         key={item.id}
                         id={item.id}
@@ -119,7 +135,21 @@ export const Home = () => {
         </div>
       </div>
 
-      <Pagination />
+      <div className="flex gap-4 justify-evenly mt-5 w-[95%] mx-auto">
+        <button
+          type="button"
+          onClick={PreviusPage}
+          className="w-1/3 sm:w-40 sm:flex-row px-6 py-2.5 bg-amber-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-amber-700 hover:shadow-lg focus:bg-amber-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-amber-800 active:shadow-lg transition duration-150 ease-in-out mb-6 sm:mb-0">
+          Anterior
+        </button>
+
+        <button
+          type="button"
+          onClick={nextPage}
+          className="w-1/3 sm:w-40 sm:flex-row px-6 py-2.5 bg-amber-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-amber-700 hover:shadow-lg focus:bg-amber-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out mb-6 sm:mb-0">
+          Siguiente
+        </button>
+      </div>
     </>
   );
 };

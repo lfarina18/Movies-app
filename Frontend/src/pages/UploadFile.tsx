@@ -1,4 +1,5 @@
 import { ChangeEvent, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { arrayMisc } from '../helpers/misc';
 import { uploadFile } from '../helpers/uploadFile';
 
@@ -61,9 +62,9 @@ export const UploadFile = () => {
             className="mx-auto px-6 py-2.5 bg-indigo-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out mb-6 sm:mb-0">
             Guardar
           </button>
-          <button className="mx-auto px-6 py-2.5 bg-amber-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-amber-700 hover:shadow-lg focus:bg-amber-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-amber-800 active:shadow-lg transition duration-150 ease-in-out">
+          <Link to='/' className="mx-auto px-6 py-2.5 bg-amber-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-amber-700 hover:shadow-lg focus:bg-amber-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-amber-800 active:shadow-lg transition duration-150 ease-in-out">
             Ir al Catálogo
-          </button>
+          </Link>
         </div>
       </form>
     </div>
