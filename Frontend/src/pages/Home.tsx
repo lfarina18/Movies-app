@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from 'react';
+import Swal from 'sweetalert2';
 import { ListItems } from '../components/ListItems';
 import apiConnection from '../config/apiConnection';
 import { Movies } from '../interfaces/interfaces';
@@ -8,6 +9,7 @@ export const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [currentCount, setCurrentCount] = useState(0);
+  
 
   const [searchText, setSearchText] = useState({
     textValue: '',
@@ -35,9 +37,32 @@ export const Home = () => {
     }
   };
 
+  const handleDelete = (id:String) => {
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: 'Una pelicula eliminado no se puede recuperar',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+          apiConnection.delete(`/movies/${id}`);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    });
+  };
+  
   const filteredMovies = (): Movies[] => {
     return movies.slice(currentPage, currentPage + 10);
   };
+
+
 
   const nextPage = () => {
     if (currentCount > currentPage + 10) setCurrentPage(currentPage + 10);
@@ -120,7 +145,7 @@ export const Home = () => {
                       <td>Cargando...</td>
                     </tr>
                   ) : (
-                    filteredMovies().map((item, i) => (
+                    filteredMovies().map((item) => (
                       <ListItems
                         key={item.id}
                         id={item.id}
@@ -129,6 +154,7 @@ export const Home = () => {
                         year={item.year}
                         directors={item.directors}
                         actors={item.actors}
+                        handleDelete={handleDelete}
                       />
                     ))
                   )}
@@ -139,7 +165,7 @@ export const Home = () => {
         </div>
       </div>
 
-      <div className="flex gap-4 justify-evenly mt-5 w-[95%] mx-auto">
+      <div className="flex justify-evenly mt-5 mb-10 w-[95%] mx-auto">
         <button
           type="button"
           onClick={PreviusPage}
