@@ -26,9 +26,8 @@ export const uploadMovies = async (req: Request, res: Response) => {
   if (pathFile) {
     try {
       const dataCsv = fs.readFileSync(`./uploads/${pathFile}`, 'utf8');
-      if (
-        !dataCsv.toLowerCase().includes('titulo;genero;año;director;actores')
-      ) {
+      if (!dataCsv.toLowerCase().includes('titulo;genero;año;director;actores')) {
+        fs.unlinkSync(`./uploads/${pathFile}`);
         return res.status(404).json({
           message:
             'El nombre de las columnas deben ser: titulo; genero; año; director; actores',

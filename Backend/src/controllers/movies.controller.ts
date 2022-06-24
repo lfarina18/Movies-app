@@ -20,7 +20,7 @@ export const getMovies:RequestHandler<Params, ResBody, ReqBody, ReqQuery> = asyn
     page = pageAsNumber;
   }
 
-  let size = 10;
+  let size = 5000;
   if(!Number.isNaN(sizeAsNumber) && !(sizeAsNumber > 10) && !(sizeAsNumber < 1)){
     size = sizeAsNumber;
   }
