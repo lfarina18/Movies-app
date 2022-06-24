@@ -6,7 +6,8 @@ import { Movies } from '../interfaces/interfaces';
 export const Home = () => {
   const [movies, setMovies] = useState<Movies[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0)
+  const [currentPage, setCurrentPage] = useState(0);
+  const [currentCount, setCurrentCount] = useState(0);
 
   const [searchText, setSearchText] = useState({
     textValue: '',
@@ -24,30 +25,26 @@ export const Home = () => {
       setIsLoading(true);
       const response = await apiConnection(`/movies/${textValue}`);
 
-
       setMovies(response.data.content);
       setIsLoading(false);
       setSearchText({ textValue: '' });
-      setCurrentPage(0)
+      setCurrentPage(0);
+      setCurrentCount(response.data.count);
     } catch (error) {
       console.log(error);
     }
   };
 
-
-
   const filteredMovies = (): Movies[] => {
-    return movies.slice(currentPage, currentPage + 5);
-  }
+    return movies.slice(currentPage, currentPage + 10);
+  };
 
   const nextPage = () => {
-    setCurrentPage(currentPage + 5);
-  }
+    if (currentCount > currentPage + 10) setCurrentPage(currentPage + 10);
+  };
   const PreviusPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 5)
-    };
-  }
+    if (currentPage > 0) setCurrentPage(currentPage - 10);
+  };
 
   return (
     <>
@@ -55,7 +52,9 @@ export const Home = () => {
         Buscar Películas por Título
       </h1>
 
-      <form onSubmit={handleSubmit} className="mx-auto mb-3 w-[95%] sm:w-2/3 sm:flex sm:items-center">
+      <form
+        onSubmit={handleSubmit}
+        className="mx-auto mb-3 w-[95%] sm:w-2/3 sm:flex sm:items-center">
         <input
           type="text"
           name="textValue"
@@ -70,6 +69,11 @@ export const Home = () => {
           Buscar
         </button>
       </form>
+
+      <p className="text-center">
+        Resultandos encontrados:{' '}
+        <span className="text-amber-600 font-semibold">{currentCount}</span>
+      </p>
 
       <div className="flex flex-col w-11/12 mx-auto">
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -146,7 +150,9 @@ export const Home = () => {
         <button
           type="button"
           onClick={nextPage}
-          className="w-1/3 sm:w-40 sm:flex-row px-6 py-2.5 bg-amber-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-amber-700 hover:shadow-lg focus:bg-amber-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out mb-6 sm:mb-0">
+          className={
+            'w-1/3 sm:w-40 sm:flex-row px-6 py-2.5 bg-amber-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-amber-700 hover:shadow-lg focus:bg-amber-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out mb-6 sm:mb-0'
+          }>
           Siguiente
         </button>
       </div>

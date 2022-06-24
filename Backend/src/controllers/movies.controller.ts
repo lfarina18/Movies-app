@@ -32,6 +32,7 @@ export const getMovies:RequestHandler<Params, ResBody, ReqBody, ReqQuery> = asyn
     });
 
     res.json({
+      count: movies.count,
       content: movies.rows,
       totalPages: Math.ceil(movies.count / Number(size))
     });
@@ -71,6 +72,7 @@ export const getMovie:RequestHandler<Params, ResBody, ReqBody, ReqQuery> = async
     });
 
     res.json({
+      count: movie.count,
       content: movie.rows,
       totalPages: Math.ceil(movie.count / Number(size))
     });
