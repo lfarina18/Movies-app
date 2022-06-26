@@ -96,7 +96,7 @@ export const Home = () => {
       </form>
 
       <p className="text-center">
-        Resultandos encontrados:{' '}
+        Resultados encontrados:{' '}
         <span className="text-amber-600 font-semibold">{currentCount}</span>
       </p>
 
